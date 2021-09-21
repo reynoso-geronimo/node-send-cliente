@@ -1,7 +1,7 @@
 import React,{useReducer} from 'react';
 import authContext from "./authContext";
 import authReducer from "./authReducer";
-import { REGISTRO_EXITOSO } from '../../types';
+import { REGISTRO_EXITOSO,REGISTRO_ERROR,LIMPIAR_ALERTA } from '../../types';
 import clienteAxios from '../../config/axios'
 
 const AuthState = ({children}) => {
@@ -23,9 +23,25 @@ const AuthState = ({children}) => {
             dispatch({
                 type:REGISTRO_EXITOSO,
                 payload:respuesta.data.msg
-            })
+            });
+
+            setTimeout(() => {
+                dispatch({
+                    type:LIMPIAR_ALERTA
+                })
+            }, 3000);
+
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data.msg)
+            dispatch({
+                type:REGISTRO_ERROR,
+                payload:error.response.data.msg
+            })
+            setTimeout(() => {
+                dispatch({
+                    type:LIMPIAR_ALERTA
+                })
+            }, 3000);
         }
     }
 
