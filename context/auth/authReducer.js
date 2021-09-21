@@ -1,4 +1,4 @@
-import { USUARIO_AUTENTICADO,REGISTRO_EXITOSO,REGISTRO_ERROR, LIMPIAR_ALERTA, LOGIN_EXITOSO, LOGIN_ERROR} from "../../types"
+import { USUARIO_AUTENTICADO,REGISTRO_EXITOSO,REGISTRO_ERROR, LIMPIAR_ALERTA, LOGIN_EXITOSO, LOGIN_ERROR, CERRAR_SESION} from "../../types"
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -30,7 +30,14 @@ export default (state,action)=>{
                 ...state,
                 usuario:action.payload
             }
-
+        case CERRAR_SESION:
+            localStorage.removeItem('token')
+            return{
+                ...state,
+                token:'',
+                usuario:null,
+                autenticado:null
+            }
         default:
             return state
     }

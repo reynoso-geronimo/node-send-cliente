@@ -1,9 +1,10 @@
 import React,{useReducer} from 'react';
 import authContext from "./authContext";
 import authReducer from "./authReducer";
-import { REGISTRO_EXITOSO,REGISTRO_ERROR,LIMPIAR_ALERTA, LOGIN_EXITOSO,LOGIN_ERROR, USUARIO_AUTENTICADO } from '../../types';
+import { REGISTRO_EXITOSO,REGISTRO_ERROR,LIMPIAR_ALERTA, LOGIN_EXITOSO,LOGIN_ERROR, USUARIO_AUTENTICADO,CERRAR_SESION } from '../../types';
 import clienteAxios from '../../config/axios'
 import tokenAuth from '../../config/tokenAuth';
+
 
 const AuthState = ({children}) => {
     //state inicial
@@ -26,7 +27,6 @@ const AuthState = ({children}) => {
                 payload:respuesta.data.token
             })
         } catch (error) {
-            console.log(error.response.data.msg)
             dispatch({
                 type:LOGIN_ERROR,
                 payload:error.response.data.msg
@@ -85,10 +85,21 @@ const AuthState = ({children}) => {
 
             })
         } catch (error) {
-            
+            dispatch({
+                type:LOGIN_ERROR,
+                payload:error.response.data.msg
+            })
         }
     }
-    
+    //cerrar sesion
+
+    const cerrarSesion =  async ()=>{
+        dispatch({
+            type:CERRAR_SESION
+        })
+    }
+
+
     return(
         <authContext.Provider
             value={{
@@ -98,7 +109,8 @@ const AuthState = ({children}) => {
                mensaje:state.mensaje,
                usuarioAutenticado,
                registrarUsuario,
-               iniciarSesion
+               iniciarSesion,
+               cerrarSesion
             }}
         >
             {children}
