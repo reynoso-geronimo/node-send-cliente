@@ -1,9 +1,13 @@
-import React from 'react';
+import React,{useContext, useEffect} from 'react';
 import Layout from '../components/Layout';
 import {useFormik}from 'formik'
 import * as Yup from 'yup'
+import authContext from '../context/auth/authContext';
 
 const CrearCuenta = () => {
+    //acceder al state
+const AuthContext= useContext(authContext)
+const {registrarUsuario } =AuthContext
 
 //formulario y validacion con formik y yup 
 const formik = useFormik({
@@ -23,7 +27,7 @@ const formik = useFormik({
                 .min(6, 'El password debe contener al menos 6 caracteres'),
     }),
     onSubmit:valores=>{
-        console.log(valores)
+        registrarUsuario(valores)
     }
 })
 
@@ -42,7 +46,7 @@ const formik = useFormik({
                         >Nombre</label>
                         <input
                             type='text'
-                            className='shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300'
+                            className='shadow appeareance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300'
                             id="nombre"
                             placeholder='Nombre de Usuario'
                             value={formik.values.nombre}
@@ -62,7 +66,7 @@ const formik = useFormik({
                         >Email</label>
                         <input
                             type='email'
-                            className='shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300'
+                            className='shadow appeareance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300'
                             id="email"
                             placeholder='Email de Usuario'
                             value={formik.values.email}
@@ -82,7 +86,7 @@ const formik = useFormik({
                         >Password</label>
                         <input
                             type='password'
-                            className='shadow appereance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300'
+                            className='shadow appeareance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-300'
                             id="password"
                             placeholder='Password'
                             value={formik.values.password}
