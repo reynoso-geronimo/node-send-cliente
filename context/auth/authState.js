@@ -1,7 +1,8 @@
 import React,{useReducer} from 'react';
 import authContext from "./authContext";
 import authReducer from "./authReducer";
-import { USUARIO_AUTENTICADO } from '../../types';
+import { REGISTRO_EXITOSO } from '../../types';
+import clienteAxios from '../../config/axios'
 
 const AuthState = ({children}) => {
     //state inicial
@@ -15,8 +16,17 @@ const AuthState = ({children}) => {
     const [state, dispatch]= useReducer(authReducer, inistialState);
 
     //registrar nuevos usuarios
-    const registrarUsuario=datos=>{
-        console.log(datos)
+    const registrarUsuario= async datos=>{
+        try {
+            const respuesta= await clienteAxios.post('/api/usuarios', datos);
+            console.log(respuesta)
+            dispatch({
+                type:REGISTRO_EXITOSO,
+                payload:respuesta.data.msg
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     //usuario autenticado
