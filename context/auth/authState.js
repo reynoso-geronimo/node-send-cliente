@@ -25,11 +25,7 @@ const AuthState = ({children}) => {
                 payload:respuesta.data.msg
             });
 
-            setTimeout(() => {
-                dispatch({
-                    type:LIMPIAR_ALERTA
-                })
-            }, 3000);
+            
 
         } catch (error) {
             console.log(error.response.data.msg)
@@ -37,12 +33,13 @@ const AuthState = ({children}) => {
                 type:REGISTRO_ERROR,
                 payload:error.response.data.msg
             })
-            setTimeout(() => {
-                dispatch({
-                    type:LIMPIAR_ALERTA
-                })
-            }, 3000);
+            
         }
+        setTimeout(() => {
+            dispatch({
+                type:LIMPIAR_ALERTA
+            })
+        }, 3000);
     }
 
     //usuario autenticado
