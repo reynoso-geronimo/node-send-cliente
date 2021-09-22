@@ -11,11 +11,39 @@ import{
 } from '../../types';
 
 
+
+
 const AppState = ({children}) => {
+
+const inistialState= {
+    mensaje_archivo:'',
+}
+
+const [state,dispatch]= useReducer(appReducer,inistialState)
+
+const mostrarAlerta= msg =>{
+    console.log(msg);
+    dispatch({
+        type:MOSTRAR_ALERTA,
+        payload:msg
+    })
+    setTimeout(() => {
+        dispatch({
+            type:LIMPIAR_ALERTA
+        })
+    }, 3000);
+}
+
+
+
+
+
     return ( 
         <appContext.Provider
         value={{
-            
+
+            mensaje_archivo:state.mensaje_archivo,
+            mostrarAlerta
         }}>
             {children}
         </appContext.Provider> );
