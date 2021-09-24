@@ -2,14 +2,24 @@ import React, {useCallback,useContext } from "react";
 import { useDropzone } from "react-dropzone";
 import appContext from "../context/app/appContext";
 import clienteAxios from "../config/axios";
+import authContext from "../context/auth/authContext";
+import Formulario from "./Formulario";
 
 const Dropzone = () => {
-  
+  const AuthContext= useContext(authContext)
+  const { autenticado, usuario }= AuthContext
+
+
   const Appcontext= useContext(appContext)
   const { mostrarAlerta,subirArchivo,crearEnlace, cargando , url }= Appcontext
 
   const onDropRejected=()=>{
-    mostrarAlerta(`No se pudo subir, Limite de archivo 1MB obten una cuenta para subir archivos mas grandes`)
+    if(autenticado){
+      mostrarAlerta(`No se pudo subir, Limite de archivo 10MB`)
+    }
+    else{
+      mostrarAlerta(`No se pudo subir, Limite de archivo 1MB obten una cuenta para subir archivos mas grandes`)
+    }
     }
 
 
@@ -25,8 +35,12 @@ const Dropzone = () => {
 
   
   //extraer contenido de dropzone
+  let maximoTamano = 1000000
+    if(autenticado){
+      maximoTamano=10000000
+    }
 
-  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({onDropAccepted,onDropRejected, maxSize:1000000});
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({onDropAccepted,onDropRejected, maxSize:maximoTamano});
 
   const archivos = acceptedFiles.map(archivo=>( 
       <li key={archivo.lastModified} className='bg-white flex-1 mb-4 shadow-lg rounded'>
@@ -45,6 +59,7 @@ const Dropzone = () => {
                 <ul>
                  {archivos}
                 </ul>
+                {autenticado? <Formulario/>: null}
                 {cargando?(<p className='text-center my-10 text-gray-600'>Subiendo archivo....</p>):(
                   <button
                   type='button'

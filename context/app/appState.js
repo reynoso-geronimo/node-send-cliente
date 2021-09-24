@@ -8,7 +8,10 @@ import{
     SUBIR_ARCHIVO_EXITO,
     SUBIR_ARCHIVO_ERROR,
     CREAR_ENLACE_EXITO,
-    CREAR_ENLACE_ERROR
+    CREAR_ENLACE_ERROR,
+    LIMPIAR_STATE,
+    AGREGAR_PASSWORD,
+    AGREGAR_DESCARGAS
 } from '../../types';
 import clienteAxios from '../../config/axios';
 
@@ -88,7 +91,23 @@ const crearEnlace = async()=>{
         console.log(error)
     }
 }
-
+const limpiarState=()=>{
+    dispatch({
+        type:LIMPIAR_STATE
+    })
+}
+const agregarPassword=password=>{
+    dispatch({
+        type:AGREGAR_PASSWORD,
+        payload:password
+    })
+}
+const agregarDescargas=descargas=>{
+    dispatch({
+        type:AGREGAR_DESCARGAS,
+        payload:descargas
+    })
+}
     return ( 
         <appContext.Provider
         value={{
@@ -103,7 +122,10 @@ const crearEnlace = async()=>{
             url:state.url,
             mostrarAlerta,
             subirArchivo,
-            crearEnlace
+            crearEnlace,
+            limpiarState,
+            agregarPassword,
+            agregarDescargas
             
           
         }}>
