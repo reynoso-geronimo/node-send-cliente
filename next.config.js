@@ -3,8 +3,8 @@ module.exports = {
 }
 module.exports={ 
   env:{
-    backendURL: 'http://localhost:4000',
-    frontendURL: 'http://localhost:3000'
+    backendURL: 'https://cryptic-sands-36824.herokuapp.com/',
+    frontendURL: 'https://node-send-cliente-90es98omx-reynoso-geronimo.vercel.app/'
 
   }
 }
